@@ -128,13 +128,14 @@ class AuthController extends Controller
                 return response()->json($validator->errors(), 422);
             }
 
-            $uid = User::inserGetId([
+            $uid = User::insertGetId([
                 'name' => $request->displayName,
                 'phone' => isset($request->phoneNumber) ? $request->phoneNumber : NULL,
                 'email' => $request->email,
-                'google_register' => 'yes',
+                'google_login' => 'yes',
                 'password' => Hash::make('test@123'),
             ]);
+            $user = User::where('id',$uid)->first();
         }
 
         $token = JWTAuth::fromUser($user);

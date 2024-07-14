@@ -35,9 +35,9 @@ class PaymentController extends Controller
                 "description" => "Test payment from itsolutionstuff.com." 
         ]);
 
-        // if($response->status == 'succeeded'){
-        //     return back()->with('success', 'Payment successful!');
-        // }
+        if($response->status == 'succeeded'){
+            return back()->with('success', 'Payment successful!');
+        }
         return back()->with('fail', 'Payment Failed! Please try after sometime');
     }
 }

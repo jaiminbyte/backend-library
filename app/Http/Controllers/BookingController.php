@@ -60,10 +60,11 @@ class BookingController extends Controller
                     'end_date' => isset($request->end_date) ? $request->end_date : NULL,
                     'price' => 1 * $days,
                     'unique_id' => $uniqid,
+                    'is_paid' => 'no'
                 ]);
             }
         }
-        return response()->json(['msg' => 'Booking updated successfully','data'=>[], 'status' => true],200);
+        return response()->json(['msg' => 'Booking updated successfully','data'=>[], 'uniqid'=>$uniqid, 'status' => true],200);
     }
 
     public function dashboard(){

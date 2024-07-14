@@ -73,11 +73,11 @@ class BookController extends Controller
 
     public function index()
     {
-        $books = Book::all();
+        $books = Book::orderBy('id','DESC')->get();
         $data = [];
         if(isset($books) && count($books) > 0){
             foreach ($books as $key => $value) {
-                if(isset($value->is_online_image) && $value->is_online_image == 'no'){
+                if(isset($value->image) && str_contains($value->image, 'http')){}else{
                     $image = isset($value->image) && $value->image != "" ? env('HOST_URL').$value->image : env('HOST_URL').'images/books_default.jpg';
                     $value->image = $image;
                 }
@@ -99,11 +99,7 @@ class BookController extends Controller
         $validator = Validator::make($request->all(),[
             'isbn' => 'required',
             'title' => 'required',
-            'author' => 'required',
-            'publisher' => 'required',
-            'year' => 'required|digits:4|integer|min:1900|max:' . (date('Y') + 1),
-            'genre' => 'required',
-            'quantity' => 'required|integer|min:0',
+            
         ]);
 
         if ($validator->fails()) {
@@ -124,7 +120,7 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::findOrFail($id);
-        if(isset($book->is_online_image) && $book->is_online_image == 'no'){
+        if(isset($book->image) && str_contains($book->image, 'http')){}else{
             $image = isset($book->image) && $book->image != "" ? env('HOST_URL').$book->image : "";
         }
         return response()->json(['msg' => '','data'=>$book, 'status' => true],200);
@@ -137,11 +133,7 @@ class BookController extends Controller
         $validator = Validator::make($request->all(),[
             'isbn' => 'required',
             'title' => 'required',
-            'author' => 'required',
-            'publisher' => 'required',
-            'year' => 'required|digits:4|integer|min:1900|max:' . (date('Y') + 1),
-            'genre' => 'required',
-            'quantity' => 'required|integer|min:0',
+           
         ]);
 
         if ($validator->fails()) {
@@ -168,7 +160,7 @@ class BookController extends Controller
         $books = Book::orderBy('year','DESC')->get();
         if(isset($books) && count($books) > 0){
             foreach ($books as $key => $value) {
-                if(isset($value->is_online_image) && $value->is_online_image == 'no'){
+                if(isset($value->image) && str_contains($value->image, 'http')){}else{
                     $image = isset($value->image) && $value->image != "" ? env('HOST_URL').$value->image : env('HOST_URL').'images/books_default.jpg';
                     $value->image = $image;
                 }
@@ -181,7 +173,7 @@ class BookController extends Controller
         $books = Book::get();
         if(isset($books) && count($books) > 0){
             foreach ($books as $key => $value) {
-                if(isset($value->is_online_image) && $value->is_online_image == 'no'){
+                if(isset($value->image) && str_contains($value->image, 'http')){}else{
                     $image = isset($value->image) && $value->image != "" ? env('HOST_URL').$value->image : env('HOST_URL').'images/books_default.jpg';
                     $value->image = $image;
                 }
@@ -194,7 +186,7 @@ class BookController extends Controller
         $books = Book::get();
         if(isset($books) && count($books) > 0){
             foreach ($books as $key => $value) {
-                if(isset($value->is_online_image) && $value->is_online_image == 'no'){
+                if(isset($value->image) && str_contains($value->image, 'http')){}else{
                     $image = isset($value->image) && $value->image != "" ? env('HOST_URL').$value->image : env('HOST_URL').'images/books_default.jpg';
                     $value->image = $image;
                 }
