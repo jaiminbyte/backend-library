@@ -24,6 +24,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\OrganizationRoomController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\AccessRightController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('user_register', [AuthController::class, 'user_register']);
@@ -62,4 +63,8 @@ Route::middleware('jwt.verify')->group(function () {
     Route::get('toprated', [BookController::class, 'toprated']);
 
     Route::get('dashboard', [BookingController::class, 'dashboard']);
+
+    Route::apiResource('access-rights', AccessRightController::class);
+
+    Route::get('history', [BookingController::class, 'history']);
 });

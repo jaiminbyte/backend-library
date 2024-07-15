@@ -155,4 +155,19 @@ class BookingController extends Controller
 
         return response()->json(['msg' => '','data'=>$data, 'status' => true],200);
     }
+
+    public function history(Request $request){
+        $validator = Validator::make($request->all(),[
+            'uid' => 'required',
+        ]);
+
+        $data = Booking::where('user_id',$request->uid)->get();
+        if(isset($data) && count($data) > 0){
+            foreach ($data as $key => $value) {
+                $value->book_data = Book::where('id',$value->book_id)->first();
+            }
+        }
+
+        return response()->json(['msg' => '','data'=>$data, 'status' => true],200);
+    }
 }
